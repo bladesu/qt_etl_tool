@@ -20,8 +20,6 @@ class TableWidgetCreator(object):
         return QTableWidgetItem(str(value))
         
     def fill(self, table: Table, qTableWidget: QTableWidget):
-        #qTableWidget: QTableWidget =  QTableWidget()
-        
         total_row_cnt = table.row_cnt() + 1 if self._is_add_header else table.row_cnt()
         self._init_table(total_row_cnt, table.col_cnt(), qTableWidget)
 
@@ -39,3 +37,4 @@ class TableWidgetCreator(object):
             for col_index, value in enumerate(row[1]):
                 qTableWidget.setItem(row_index, col_index, self._create_item(value))
         return qTableWidget
+    

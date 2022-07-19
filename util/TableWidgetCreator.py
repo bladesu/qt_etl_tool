@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from model.Table import Table
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QPushButton, QHeaderView, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView
 
 class TableWidgetCreator(object):
     
@@ -23,6 +23,10 @@ class TableWidgetCreator(object):
         total_row_cnt = table.row_cnt() + 1 if self._is_add_header else table.row_cnt()
         self._init_table(total_row_cnt, table.col_cnt(), qTableWidget)
 
+        # set table ui properties
+        #for col_idx in range(0, table.col_cnt()):
+        #    qTableWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        
         first_row_threshold = 0
         # add header
         if self._is_add_header:

@@ -1,13 +1,6 @@
 # -*- coding: utf-8 -*-
-from ast import Lambda
-from PyQt5 import QtCore, QtGui
 from PyQt5.QtWidgets import *
-from model.AggregateOperation import *
-from misc.AggregateFunctionType import *
-from misc.AggregateDimension import *
-from operation.SelectOperation import *
 from view.SheetTableView import Ui_MainWindow
-
 from model.Table import Table
 from util.ExcelLoader import ExcelLoader
 from util.TableWidgetCreator import TableWidgetCreator
@@ -25,6 +18,10 @@ class SheetTableETLController(QMainWindow):
     _COLUMN_AMOUNT_TABLE1 = '數量'
     _COLUMN_AMOUNT_TABLE2 = '庫存量'
     _COLUMN_BALANCE = '實際庫存'
+    
+    _COLUMN_DESCRIPTION_1 = '單位'
+    _COLUMN_DESCRIPTION_2 = '品名規格'
+    
     _SHEETNAME_OUTPUT = '實際庫存'
     
     def __init__(self):
@@ -61,13 +58,12 @@ class SheetTableETLController(QMainWindow):
         self._load_table_2(filename)
     
     def _save_file(self):
-        if None == self.export_table:
+        if self.export_table is None:
             return # do nothing
         filename, filetype = QFileDialog.getSaveFileName(self, self._DISPLAY_SAVE_FILE)
-        #excel_writer = open(filename,'w')
         filename = filename if filename.endswith('.xlsx') else '{}.xlsx'.format(filename)
         print('save as {}'.format(filename))
-        self.export_table.to_excel(filename + '.xlsx', sheet_name=self._SHEETNAME_OUTPUT)
+        self.export_table.to_excel(filename, sheet_name=self._SHEETNAME_OUTPUT)
 
     def _load_table_1(self, excel_file_path):
         self.tables_1: Dict[str, Table] = ExcelLoader(
@@ -100,7 +96,7 @@ class SheetTableETLController(QMainWindow):
         TableWidgetCreator().fill(table, self.ui.tableWidget_2)
 
     def _do_mapping(self):
-        if None == self.tables_1 or None == self.tables_2:
+        if self.tables_1 is None or self.tables_2 is None:
             return # do nothing
         base_df = DataFrame()
         for table in self.tables_2.values():
@@ -110,6 +106,9 @@ class SheetTableETLController(QMainWindow):
         exported_df = DataFrame()
         exported_df[self._COLUMN_ID] = base_df[self._COLUMN_ID]
         exported_df[self._COLUMN_AMOUNT_TABLE2] = base_df[self._COLUMN_AMOUNT_TABLE2]
+        exported_df[self._COLUMN_DESCRIPTION_1] = base_df[self._COLUMN_DESCRIPTION_1]
+        exported_df[self._COLUMN_DESCRIPTION_2] = base_df[self._COLUMN_DESCRIPTION_2]
+
         # remaining balance
         remaining_df = exported_df.copy(deep=True)
 

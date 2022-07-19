@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1075</width>
+    <height>837</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>19</y>
+      <width>1041</width>
+      <height>381</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_loadingFiles">
+     <item>
+      <widget class="QGroupBox" name="groupBox_1">
+       <property name="title">
+        <string>Loaded files</string>
+       </property>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="geometry">
+         <rect>
+          <x>-11</x>
+          <y>19</y>
+          <width>1051</width>
+          <height>361</height>
+         </rect>
+        </property>
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;file2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_1">
+         <attribute name="title">
+          <string>領料記錄表</string>
+         </attribute>
+         <widget class="QListWidget" name="sheetNames_1">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>151</width>
+            <height>301</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QTableWidget" name="tableWidget_1">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>30</y>
+            <width>881</width>
+            <height>301</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="openFileButton_1">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>0</y>
+            <width>151</width>
+            <height>32</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>打開領料記錄表</string>
+          </property>
+         </widget>
+         <widget class="QTextEdit" name="showOpenFile_1">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>0</y>
+            <width>881</width>
+            <height>31</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="tab_2">
+         <attribute name="title">
+          <string>庫存報表</string>
+         </attribute>
+         <widget class="QTableWidget" name="tableWidget_2">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>30</y>
+            <width>881</width>
+            <height>301</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QListWidget" name="sheetNames_2">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>151</width>
+            <height>301</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QTextEdit" name="showOpenFile_2">
+          <property name="geometry">
+           <rect>
+            <x>160</x>
+            <y>0</y>
+            <width>881</width>
+            <height>31</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="openFileButton_2">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>0</y>
+            <width>151</width>
+            <height>32</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>打開庫存報表</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>410</y>
+      <width>1041</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_exportFile">
+     <item>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="title">
+        <string>Mapped table</string>
+       </property>
+       <widget class="QPushButton" name="mappingButton">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>131</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>產生實際庫存報表</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="exportedTableWidget">
+        <property name="geometry">
+         <rect>
+          <x>5</x>
+          <y>51</y>
+          <width>1031</width>
+          <height>311</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="saveFileButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>780</y>
+      <width>141</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>儲存實際庫存報表</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="action_open_1">
+   <property name="text">
+    <string>$open</string>
+   </property>
+  </action>
+  <action name="action_open_2">
+   <property name="text">
+    <string>$open</string>
+   </property>
+  </action>
+  <action name="actionmapping">
+   <property name="text">
+    <string>$mapping</string>
+   </property>
+   <property name="toolTip">
+    <string>mapping</string>
+   </property>
+  </action>
+  <action name="actionexport">
+   <property name="text">
+    <string>$export</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

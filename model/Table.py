@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from pandas import DataFrame
+from misc.AggregateDimension import *
 
 class Table():
     
@@ -22,3 +23,9 @@ class Table():
     
     def head(self):
         return self.df.head()
+    
+    def get(self, where_i, where_j):
+        return self.df[where_i][where_j]
+    
+    def get_df(self):
+        return self.df

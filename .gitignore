@@ -1,2 +1,5 @@
 
 *.pyc
+
+start_sheet_table_etl.build/*
+start_sheet_table_etl.dist/*

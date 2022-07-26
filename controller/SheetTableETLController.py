@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem
 from view.SheetTableView import Ui_MainWindow
 from model.Table import Table
 from util.ExcelLoader import ExcelLoader

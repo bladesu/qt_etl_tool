@@ -103,10 +103,16 @@ class SheetTableETLController(QMainWindow):
             base_df = pd.concat([base_df, table.get_df()], ignore_index=True)
         # reversed find possible primary key
         for table in self.tables_1.values():
-            for id in table.get_df().loc[:, self._COLUMN_ID]:
-                if base_df[self._COLUMN_ID].eq(id) is True:
+            for (idx, row_series) in table.iterrows():
+                id = row_series[self._COLUMN_ID]
+                amount = row_series[self._COLUMN_AMOUNT_TABLE1]
+                if type(amount) == int and (id in base_df[self._COLUMN_ID].unique()) == False:
                     print('need append data from table 1 which is lacked in table 2:{}'.format(id))
-                    base_df = pd.concat([base_df, {self._COLUMN_ID: id, self._COLUMN_AMOUNT_TABLE2: 0}],ignore_index=True)
+                    row_idx = base_df.shape[0]
+                    base_df.loc[row_idx] = [None for i in range(base_df.shape[1])]
+                    base_df.loc[row_idx, self._COLUMN_ID] = id
+                    base_df.loc[row_idx, self._COLUMN_AMOUNT_TABLE2] = 0
+                    base_df.loc[row_idx, self._COLUMN_DESCRIPTION_2] = row_series[self._COLUMN_DESCRIPTION_2]
 
         # add base column
         exported_df = DataFrame()

@@ -121,7 +121,6 @@ class SheetTableETLController(QMainWindow):
         exported_df[self._COLUMN_AMOUNT_TABLE2] = pd.to_numeric(base_df[self._COLUMN_AMOUNT_TABLE2], errors = 'coerce')
         exported_df[self._COLUMN_DESCRIPTION_1] = base_df[self._COLUMN_DESCRIPTION_1]
         exported_df[self._COLUMN_DESCRIPTION_2] = base_df[self._COLUMN_DESCRIPTION_2]
-        print(exported_df.info())
         # remaining balance
         remaining_df = exported_df.copy(deep=True)
 

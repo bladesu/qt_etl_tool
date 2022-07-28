@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from numpy import isin
 from model.Table import Table
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView
 import numbers
@@ -16,7 +17,9 @@ class TableWidgetCreator(object):
         qTableWidget.setColumnWidth(2, 300)
     
     def _create_item(self, value):
-        if isinstance(value, numbers.Number):
+        if isinstance(value, int):
+            value =  '{:10d}'.format(value)
+        elif isinstance(value, numbers.Number):
             value =  '{:10.1f}'.format(value)
         return QTableWidgetItem(str(value))
         

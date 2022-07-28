@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.Table import Table
 from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QHeaderView
+import numbers
 
 class TableWidgetCreator(object):
     
@@ -15,18 +16,14 @@ class TableWidgetCreator(object):
         qTableWidget.setColumnWidth(2, 300)
     
     def _create_item(self, value):
-        if isinstance(value, (float, int)):
-            value = '{0:0,.0f}'.format(value)
+        if isinstance(value, numbers.Number):
+            value =  '{:10.1f}'.format(value)
         return QTableWidgetItem(str(value))
         
     def fill(self, table: Table, qTableWidget: QTableWidget):
         total_row_cnt = table.row_cnt() + 1 if self._is_add_header else table.row_cnt()
         self._init_table(total_row_cnt, table.col_cnt(), qTableWidget)
 
-        # set table ui properties
-        #for col_idx in range(0, table.col_cnt()):
-        #    qTableWidget.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
-        
         first_row_threshold = 0
         # add header
         if self._is_add_header:

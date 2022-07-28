@@ -7,6 +7,7 @@ from util.TableWidgetCreator import TableWidgetCreator
 from typing import Dict
 from pandas import DataFrame
 import pandas as pd
+import numbers
 class SheetTableETLController(QMainWindow):
     
     _DISPLAY_OPEN_FILE = '打開檔案'
@@ -106,21 +107,21 @@ class SheetTableETLController(QMainWindow):
             for (idx, row_series) in table.iterrows():
                 id = row_series[self._COLUMN_ID]
                 amount = row_series[self._COLUMN_AMOUNT_TABLE1]
-                if type(amount) == int and (id in base_df[self._COLUMN_ID].unique()) == False:
+                if isinstance(amount, numbers.Number) and (id in base_df[self._COLUMN_ID].unique()) == False:
                     print('need append data from table 1 which is lacked in table 2:{}'.format(id))
                     row_idx = base_df.shape[0]
                     base_df.loc[row_idx] = [None for i in range(base_df.shape[1])]
                     base_df.loc[row_idx, self._COLUMN_ID] = id
-                    base_df.loc[row_idx, self._COLUMN_AMOUNT_TABLE2] = 0
+                    base_df.loc[row_idx, self._COLUMN_AMOUNT_TABLE2] = 0.0
                     base_df.loc[row_idx, self._COLUMN_DESCRIPTION_2] = row_series[self._COLUMN_DESCRIPTION_2]
 
         # add base column
         exported_df = DataFrame()
         exported_df[self._COLUMN_ID] = base_df[self._COLUMN_ID]
-        exported_df[self._COLUMN_AMOUNT_TABLE2] = base_df[self._COLUMN_AMOUNT_TABLE2]
+        exported_df[self._COLUMN_AMOUNT_TABLE2] = pd.to_numeric(base_df[self._COLUMN_AMOUNT_TABLE2], errors = 'coerce')
         exported_df[self._COLUMN_DESCRIPTION_1] = base_df[self._COLUMN_DESCRIPTION_1]
         exported_df[self._COLUMN_DESCRIPTION_2] = base_df[self._COLUMN_DESCRIPTION_2]
-
+        print(exported_df.info())
         # remaining balance
         remaining_df = exported_df.copy(deep=True)
 
@@ -128,10 +129,18 @@ class SheetTableETLController(QMainWindow):
             df = table.get_df()
             partial_df = DataFrame(index=[])
             partial_df[self._COLUMN_ID] = df[self._COLUMN_ID]
-            partial_df[self._COLUMN_AMOUNT_TABLE1] = df[self._COLUMN_AMOUNT_TABLE1]
+            partial_df[self._COLUMN_AMOUNT_TABLE1] = pd.to_numeric(df[self._COLUMN_AMOUNT_TABLE1], errors = 'coerce')
             partial_df.dropna(subset=[self._COLUMN_ID], inplace=True)
+            partial_df.apply(pd.to_numeric, errors = 'coerce').dropna(inplace=True)
+
             mapping = dict(partial_df[[self._COLUMN_ID, self._COLUMN_AMOUNT_TABLE1]].values)
             exported_df[sheet_name] = exported_df[self._COLUMN_ID].map(mapping)
+            print('-----------------------mapping table')
+            print(mapping)
+            print('-----------------------table1')
+            print(exported_df[sheet_name])
+            print('-----------------------table2')
+            print(remaining_df[self._COLUMN_AMOUNT_TABLE2])
             remaining_df[self._COLUMN_AMOUNT_TABLE2] = remaining_df[self._COLUMN_AMOUNT_TABLE2].subtract(exported_df[sheet_name], fill_value=0)
 
         exported_df[self._COLUMN_BALANCE] = remaining_df[self._COLUMN_AMOUNT_TABLE2]
